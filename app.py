@@ -23,7 +23,7 @@ mydb=mysql.connector.connect(host=host,user=user,password=password,db=db)
 #mydb=mysql.connector.connect(host="localhost",user="root",password="yaswanth",db="pnm")
 @app.route('/')
 def index():
-    return render_template('title.html')
+    return render_template('title.html')#
 @app.route('/login',methods=['GET','POST'])
 def login():
     if session.get('user'):
