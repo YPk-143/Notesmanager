@@ -20,15 +20,16 @@ with mysql.connector.connect(host=host,user=user,password=password,port=port,db=
     cursor.execute("create table if not exists notes(nid int not null auto_increment primary key,title tinytext,content text,date timestamp default now() on update now(),added_by varchar(50),foreign key(added_by) references users(username))")
     cursor.close()
 mydb=mysql.connector.connect(host=host,user=user,password=password,db=db)
-#mydb=mysql.connector.connect(host="localhost",user="root",password="yaswanth",db="pnm")
+#mydb=mysql.connector.connect(host="localhost",user="root",password="admin",db="pnm")
 @app.route('/')
 def index():
-    return render_template('title.html')#
+    return render_template('title.html')
 @app.route('/login',methods=['GET','POST'])
 def login():
     if session.get('user'):
         return redirect(url_for('home'))
     if request.method=='POST':
+        print(request.form)
         username=request.form['username']
         password=request.form['password']
         cursor=mydb.cursor(buffered=True)
@@ -175,6 +176,5 @@ def updatenotes(nid):
         return render_template('update.html',title=title,content=content)
     else:
         return redirect(url_for('login'))
-app.run(use_reloader=True,debug=True)
 if __name__=='__main__':
     app.run()
